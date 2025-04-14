@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
-
-// MongoDB URI
-const dbUri = "mongodb://127.0.0.1:27017/scratch";
+const config = require('config');
+const dbgr = require('debug')("development: mongoose")
 
 // Connect to MongoDB using mongoose
-mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(`${config.get("MONGODB_URI")}/scratch`, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log('MongoDB connected successfully');
+    dbgr('MongoDB connected successfully');
   })
   .catch((err) => {
-    console.error('Error connecting to MongoDB:', err);
+    dbgr('Error connecting to MongoDB:', err);
   });
 
 // Export the connection object for use in other files
